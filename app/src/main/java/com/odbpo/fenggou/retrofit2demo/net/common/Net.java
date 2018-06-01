@@ -34,7 +34,10 @@ public class Net {
                     .addHeader("Content-Type", "application/json")
                     .addHeader("Authorization", "Bearer " + Auth.getToken());
             Request request = builder.build();
-            return chain.proceed(request);
+            Response response = chain.proceed(request);
+            String json = response.body().string();//获取返回json数据
+            System.out.println("Interceptor-Head：" + json);
+            return chain.proceed(request);//注意此处不能用response代替，否则报closed
         }
     }
 
